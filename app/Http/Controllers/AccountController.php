@@ -2,29 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\AccountUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class ProfileController extends Controller
+class AccountController extends Controller
 {
     /**
-     * Display the user's profile form.
+     * Display the user's account form.
      */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
+        return view('account.edit', [
             'user' => $request->user(),
         ]);
     }
 
     /**
-     * Update the user's profile information.
+     * Update the user's account information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(AccountUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
 
@@ -34,7 +34,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('account.edit')->with('status', 'account-updated');
     }
 
     /**
