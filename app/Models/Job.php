@@ -33,10 +33,10 @@ class Job extends Model
     }
 
     public function position(){
-        return $this->belongsToMany(Position::class);
+        return $this->belongsTo(Position::class);
     }
 
     public function category(){
-        return $this->belongsToMany(Category::class);
+        return $this->belongsTo(Category::class);
     }
 }
