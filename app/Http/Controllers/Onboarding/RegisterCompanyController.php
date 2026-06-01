@@ -32,20 +32,21 @@ class RegisterCompanyController extends Controller
             'description' => ['required', 'max:255'],
         ]);
 
-        $company = Company::create([
-            'user_id' => $user->id,
-            'trade_name' => $validated['trade_name'],
-            'legal_name' => $validated['legal_name'],
-            'cnpj' => $validated['cnpj'],
-            'state_registration' => $validated['state_registration'],
-            'founded_at' => $validated['founded_at'],
-            'employee_count' => $validated['employee_count'],
-            'contact_email' => $validated['contact_email'],
-            'contact_phone' => $validated['contact_phone'],
-            'website_url' => $validated['website_url'],
-            'description' => $validated['description']
-
-        ]);
+        $company = Company::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'trade_name' => $validated['trade_name'],
+                'legal_name' => $validated['legal_name'],
+                'cnpj' => $validated['cnpj'],
+                'state_registration' => $validated['state_registration'],
+                'founded_at' => $validated['founded_at'],
+                'employee_count' => $validated['employee_count'],
+                'contact_email' => $validated['contact_email'],
+                'contact_phone' => $validated['contact_phone'],
+                'website_url' => $validated['website_url'],
+                'description' => $validated['description'],
+            ]
+        );
 
         return redirect()->route('dashboard');
 

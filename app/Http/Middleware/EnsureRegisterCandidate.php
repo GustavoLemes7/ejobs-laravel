@@ -21,8 +21,6 @@ class EnsureRegisterCandidate
         if($user->user_type !== UserType::CANDIDATE)
             abort(403);
 
-        if($user->candidate)
-            abort(403);
 
         return $next($request);
     }

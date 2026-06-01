@@ -26,7 +26,7 @@ class RegisterCandidateController extends Controller
             'birth_date' => ['required', 'max:255']
         ]);
 
-        $candidate = Candidate::create([
+        $candidate = Candidate::updateOrCreate([
             'user_id' => $user->id,
             'full_name' => $validated['full_name'],
             'cpf' => $validated['cpf'],

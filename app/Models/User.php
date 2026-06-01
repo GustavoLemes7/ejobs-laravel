@@ -43,8 +43,7 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
-    {
+    protected function casts(): array{
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
@@ -62,5 +61,13 @@ class User extends Authenticatable
 
     public function company(){
         return $this->hasOne(Company::class);
+    }
+
+    public function isCompany(): bool{
+        return $this->user_type === UserType::COMPANY;
+    }
+
+    public function isCandidate(): bool{
+        return $this->user_type === UserType::CANDIDATE;
     }
 }

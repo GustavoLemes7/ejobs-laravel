@@ -21,9 +21,6 @@ class EnsureRegisterCompany
         if($user->user_type !== UserType::COMPANY)
             abort(403);
 
-        if($user->company)
-            abort(403);
-
         return $next($request);
     }
 }
