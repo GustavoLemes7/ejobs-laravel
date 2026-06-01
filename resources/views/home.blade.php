@@ -50,7 +50,7 @@
 
                 @foreach($categories as $category)
 
-                    <a href="#"
+                    <a href="{{route('jobs', ['category_id' => $category->id])}}"
                        class="bg-white rounded-2xl shadow hover:shadow-lg transition p-6 text-center">
 
                         <div class="text-blue-600 text-4xl mb-3">
