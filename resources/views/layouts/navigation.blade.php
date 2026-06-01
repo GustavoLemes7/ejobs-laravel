@@ -6,11 +6,25 @@
             <!-- LOGO + LINKS -->
             <div class="flex">
 
+                
+                @auth
+                <!-- Logado -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
                         <x-application-logo class="block h-16 w-auto" />
                     </a>
                 </div>
+                @endauth
+
+                
+                @guest
+                <!-- Visitante -->
+                <div class="shrink-0 flex items-center">
+                    <a href="{{ route('home') }}">
+                        <x-application-logo class="block h-16 w-auto" />
+                    </a>
+                </div>
+                @endguest
 
                 @auth
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -20,13 +34,22 @@
                 </div>
                 @endauth
 
+                @guest
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('jobs')">
+                        Vagas
+                    </x-nav-link>
+                </div>
+                @endguest
+
             </div>
 
             <!-- RIGHT SIDE -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
 
-                <!-- 👤 LOGADO -->
+                
                 @auth
+                <!--  LOGADO -->
                 <x-dropdown align="right" width="48">
 
                     <x-slot name="trigger">
@@ -60,8 +83,9 @@
                 @endauth
 
 
-                <!-- 👤 VISITANTE -->
+                
                 @guest
+                <!--  VISITANTE -->
                 <div class="flex space-x-4">
                     <a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-900">
                         Login

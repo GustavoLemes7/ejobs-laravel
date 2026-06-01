@@ -15,7 +15,7 @@
                 </p>
 
                 <!-- SEARCH -->
-                <form method="GET" action="#">
+                <form method="GET" action="{{route('jobs.search')}}">
                     <div class="flex flex-col md:flex-row gap-3 justify-center">
 
                         <input
@@ -50,7 +50,7 @@
 
                 @foreach($categories as $category)
 
-                    <a href="{{route('jobs', ['category_id' => $category->id])}}"
+                    <a href="{{route('jobs.category', ['category_id' => $category->id])}}"
                        class="bg-white rounded-2xl shadow hover:shadow-lg transition p-6 text-center">
 
                         <div class="text-blue-600 text-4xl mb-3">

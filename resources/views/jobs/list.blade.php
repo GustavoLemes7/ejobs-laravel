@@ -1,5 +1,101 @@
 <x-app-layout>
 
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+
+        <form method="GET" action="{{ route('jobs') }}">
+
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <label class="form-label">Buscar</label>
+
+                    <input type="text"
+                           name="search"
+                           class="form-control"
+                           placeholder="Título, descrição..."
+                           value="{{ request('search') }}">
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">Categoria</label>
+
+                    <select name="category_id" class="form-select">
+
+                        <option value="">
+                            Todas
+                        </option>
+
+                        @foreach($categories as $category)
+
+                            <option value="{{ $category->id }}"
+                                @selected(request('category_id') == $category->id)>
+
+                                {{ $category->name }}
+
+                            </option>
+
+                        @endforeach
+
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">Modalidade</label>
+
+                    <select name="modality" class="form-select">
+
+                        <option value="" selected>Todas</option>
+
+                        @foreach($modalities as $modality)
+
+                            <option value="{{ $modality }}">
+
+                                {{ $modality }}
+
+                            </option>
+
+                        @endforeach
+
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">Contrato</label>
+
+                    <select name="contract_type" class="form-select">
+
+                        <option value="">Todos</option>
+
+                        @foreach($contract_types as $contract_type)
+
+                            <option value="{{ $contract_type }}">
+
+                                {{ $contract_type }}
+
+                            </option>
+
+                        @endforeach
+
+                    </select>
+                </div>
+
+                <div class="col-md-2 d-flex align-items-end">
+
+                    <button type="submit"
+                            class="btn btn-primary w-100">
+                        Filtrar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
 <div class="container py-5">
 
     @if(request('search'))

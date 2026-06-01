@@ -10,8 +10,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/jobs', [JobController::class, 'ListByCategory'])->name('jobs');
-Route::get('/jobs/{job}', [JobController::class, 'ListByCategory'])->name('jobs.show');
+Route::get('/jobs', [JobController::class, 'listPublic'])->name('jobs');
+Route::get('/jobs/category', [JobController::class, 'listPublic'])->name('jobs.category');
+Route::get('/jobs/title', [JobController::class, 'listPublic'])->name('jobs.category');
+Route::get('/jobs/search', [JobController::class, 'listBySearch'])->name('jobs.search');
+Route::get('/jobs/{job}', [JobController::class, 'viewJob'])->name('jobs.show');
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
