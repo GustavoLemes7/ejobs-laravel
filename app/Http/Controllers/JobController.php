@@ -7,6 +7,7 @@ use App\Enums\Modality;
 use App\Models\Category;
 use App\Models\Job;
 use App\Enums\Status;
+use App\Models\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -137,8 +138,24 @@ class JobController extends Controller{
         'modalities' => $modalities, 'contract_types' => $contract_types]);
     }
 
-    public function viewJob(Job $job){
-       
-        return view('jobs.show', ['job' => $job]);
+    public function viewJob(Request $request, Job $job){
+        
+        $user = $request->user();
+        $application = null;
+        if($user){
+            if($user->candidate){
+                $application = Application::where('job_listing_id', $job->id)
+                ->where('candidate_id', $user->candidate->id)->first();
+            }
+        }
+
+        return view('jobs.show', ['job' => $job, 'application'=> $application]);
+    }
+
+    public function listByCompany(Request $request){    
+
+        $user = $request->user();
+        $jobs = Job::where('company_id', $user->id);
+        return $jobs;
     }
 }

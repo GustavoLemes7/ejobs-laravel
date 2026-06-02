@@ -26,15 +26,24 @@
 
                                     @if(auth()->id() !== $job->company->user_id)
 
-                                        <form action="{{ route('applications.store', $job) }}"
+                                        <form action="{{ route('application.store', $job) }}"
                                               method="POST"
                                               class="d-inline">
                                             @csrf
+
+                                        @if($application)
+                                            <button type="button"
+                                                    class="btn btn-secondary"
+                                                    disabled>
+                                                Você já se candidatou
+                                            </button>
+                                        @else
 
                                             <button type="submit"
                                                     class="btn btn-success">
                                                 Candidatar-se
                                             </button>
+                                        @endif
                                         </form>
 
                                     @endif

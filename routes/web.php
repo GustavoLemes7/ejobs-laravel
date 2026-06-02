@@ -3,6 +3,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Onboarding\RegisterCandidateController;
 use App\Http\Controllers\Onboarding\RegisterCompanyController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\Onboarding\TipoUsuarioController;
@@ -46,6 +47,11 @@ Route::middleware(['auth', 'register.candidate'])->group(function(){
 Route::middleware(['auth'])->group(function(){
     Route::get('/job', [JobController::class, 'index'])->name('job');
     Route::post('/job', [JobController::class, 'store'])->name('job.store');
+});
+
+Route::middleware(['auth', 'application'])->group(function(){
+    
+    Route::post('/application/{job}', [ApplicationController::class, 'store'])->name('application.store');
 });
 
 require __DIR__.'/auth.php';

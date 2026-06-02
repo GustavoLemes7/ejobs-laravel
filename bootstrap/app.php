@@ -18,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'register.company' => \App\Http\Middleware\EnsureRegisterCompany::class,
             'register.candidate' => \App\Http\Middleware\EnsureRegisterCandidate::class,
             'guest.onboarding' => \App\Http\Middleware\EnsureBlockOnboardingAccess::class,
+            'application' => \App\Http\Middleware\EnsureApplication::class,
         ]);
 
     })
