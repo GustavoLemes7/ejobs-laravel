@@ -44,9 +44,12 @@ Route::middleware(['auth', 'register.candidate'])->group(function(){
     Route::post('register/candidate', [RegisterCandidateController::class, 'store'])->name('onboarding.candidate.store');
 });
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth', 'company'])->group(function(){
     Route::get('/job', [JobController::class, 'index'])->name('job');
     Route::post('/job', [JobController::class, 'store'])->name('job.store');
+    Route::get('/job/edit/{job}', [JobController::class, 'edit'])->name('job.edit');
+    Route::put('/job/edit/{job}', [JobController::class, 'update'])->name('job.update');
+    Route::get('/job/company', [JobController::class, 'listByCompany'])->name('job.list');
 });
 
 Route::middleware(['auth', 'application'])->group(function(){

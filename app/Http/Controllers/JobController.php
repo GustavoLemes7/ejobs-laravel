@@ -10,15 +10,19 @@ use App\Enums\Status;
 use App\Models\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\View\View;
 
 class JobController extends Controller{
 
-    public function index(Request $request) : View {
+    public function index() : View {
 
         $categories = Category::all();
+        $modalities = Modality::cases();
+        $contract_types = ContractType::cases();
 
-        return view('jobs.create', ['categories' => $categories]);
+        return view('jobs.create', ['categories' => $categories, 
+            'modalities' => $modalities, 'contract_types' => $contract_types]);
     }
 
     public function store(Request $request) : RedirectResponse{
@@ -58,6 +62,58 @@ class JobController extends Controller{
         ]);
 
         return redirect(route('dashboard', absolute: false));
+    }
+
+    public function edit(Job $job){
+        $categories = Category::all();
+        $modalities = Modality::cases();
+        $contract_types = ContractType::cases();
+        $statuses = Status::cases();
+
+        return view('jobs.edit', ['job' => $job, 'categories' => $categories, 
+            'modalities' => $modalities, 'contract_types' => $contract_types,
+            'statuses' => $statuses]);
+    }
+
+    public function update(Request $request, Job $job) : RedirectResponse{
+
+        $user = $request->user();
+
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+
+            'modality' => ['required', new Enum(Modality::class)],
+
+            'work_schedule' => ['required','string','max:100'],
+
+            'contract_type' => ['required', new Enum(ContractType::class)],
+
+            'salary' => ['nullable','numeric','min:0'],
+
+            'description' => ['required','string'],
+
+            'requirements' => ['nullable','string'],
+
+            'category_id' => ['required','exists:categories,id'],
+
+            'status' => ['required', new Enum(Status::class)],
+        ]);
+
+
+        $job->update([
+            'title' => $validated['title'],
+            'modality' => $validated['modality'],
+            'work_schedule' => $validated['work_schedule'],
+            'contract_type' => $validated['contract_type'],
+            'salary' => $validated['salary'],
+            'description' => $validated['description'],
+            'requirements' => $validated['requirements'] ?? null,
+            'status' => $validated['status'],
+            'company_id' => $user->company->id,
+            'category_id' => $validated['category_id'],
+        ]);
+
+        return redirect(route('job.list', absolute: false));
     }
 
     public function listById(Job $job){
@@ -155,7 +211,7 @@ class JobController extends Controller{
     public function listByCompany(Request $request){    
 
         $user = $request->user();
-        $jobs = Job::where('company_id', $user->id);
-        return $jobs;
+        $jobs = Job::where('company_id', $user->company->id)->paginate(10)->withQueryString();
+        return view('company.list',['jobs' => $jobs]);
     }
 }

@@ -13,10 +13,12 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
 
-        <x-dashboard.shared.stats-card
-            title="Vagas Ativas"
-            :value="$jobsCount"
+        <x-dashboard.shared.action-card
+            title="Vagas Publicadas"
+            :description="$jobsCount"
             icon="briefcase"
+            :href="route('job.list')"
+            buttonText="Ver vagas"
         />
 
         <x-dashboard.shared.action-card
